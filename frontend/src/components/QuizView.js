@@ -22,7 +22,7 @@ class QuizView extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: `/categories`, //TODO: update request URL
+      url: '/categories', //TODO: update request URL
       type: "GET",
       success: (result) => {
         this.setState({ categories: result.categories })
@@ -100,7 +100,6 @@ class QuizView extends Component {
   }
 
   renderPrePlay(){
-
     const {categories} = this.state
       return (
           <div className="quiz-play-holder">
@@ -108,15 +107,15 @@ class QuizView extends Component {
               <div className="category-holder">
                   <div className="play-category" onClick={this.selectCategory}>ALL</div>
                   {
-                  categories.map((category, id) => {
-                  return (
-                    <div
-                      key={id}
-                      value={id}
-                      className="play-category"
-                      onClick={() => this.selectCategory({type: categories[id], id})}>
-                      {category.type}
-                    </div>
+                    categories.map((category, id) => {
+                    return (
+                      <div
+                        key={id}
+                        value={id}
+                        className="play-category"
+                        onClick={() => this.selectCategory({type: categories[id], id})}>
+                        {category.type}
+                      </div>
                   )
                 })}
               </div>

@@ -28,9 +28,10 @@ class QuestionView extends Component {
       success: (result) => {
         this.setState({
           questions: result.questions,
-          totalQuestions: result.total_questions,
+          totalQuestions: result.count,
           categories: result.categories,
-          currentCategory: result.current_category })
+          currentCategory: result.current_category
+        })
         return;
       },
       error: (error) => {
@@ -91,7 +92,8 @@ class QuestionView extends Component {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category })
+          currentCategory: result.current_category
+        })
         return;
       },
       error: (error) => {
@@ -120,7 +122,6 @@ class QuestionView extends Component {
   }
 
   render() {
-
     const {categories, questions} = this.state;
 
     return (
@@ -128,7 +129,7 @@ class QuestionView extends Component {
         <div className="categories-list">
           <h2 onClick={() => {this.getQuestions()}}>Categories</h2>
           <ul>
-          {categories.map((category, id) => (
+            {categories.map((category, id) => (
               <li key={category.id} onClick={() => {this.getByCategory(category.id)}}>
                 {category.id}
                 <img className="category" src={`${category.type}.svg`}/>
@@ -139,7 +140,7 @@ class QuestionView extends Component {
         </div>
         <div className="questions-list">
           <h2>Questions</h2>
-          {this.state.questions.map((q, ind) => (
+          {questions.map((q, ind) => (
             <Question
               key={q.id}
               question={q.question}
