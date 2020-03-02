@@ -33,7 +33,6 @@ def create_app(test_config=None):
     setup_db(app)
 
     # Set up cors and allow '*' for origins
-    #cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
     cors = CORS(app)
 
     # Use the after_request decorator to set Access-Control-Allow
@@ -46,8 +45,7 @@ def create_app(test_config=None):
         return response
 
     # Handle GET requests for all available categories.
-    @app.route('/api/categories')
-    #@cross_origin()
+    @app.route('/page/categories')
     def get_all_categories():
         categories = Category.query.all()
         if len(categories) == 0:
@@ -64,8 +62,7 @@ def create_app(test_config=None):
             abort(400)
 
     # Handle GET requests for questions and their categories
-    @app.route('/api/questions')
-    @cross_origin()
+    @app.route('/page/questions')
     def get_all_questions():
         categories = Category.query.order_by(Category.id).all()
         questions = Question.query.all()
@@ -92,8 +89,7 @@ def create_app(test_config=None):
             abort(400)
 
     # Handle DELETE question using a question ID.
-    @app.route('/api/questions/<int:question_id>', methods=['DELETE'])
-    #@cross_origin()
+    @app.route('/page/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
         question = Question.query.filter(
             Question.id == question_id).one_or_none()
@@ -117,8 +113,7 @@ def create_app(test_config=None):
             abort(400)
 
     # Handle endpoint to POST a new question
-    @app.route('/api/questions', methods=['POST'])
-    #@cross_origin()
+    @app.route('/page/questions', methods=['POST'])
     def post_question():
         error = False
         # Declare and empty data dictionary to hold all retrieved variables
@@ -159,8 +154,7 @@ def create_app(test_config=None):
         }), 200
 
     # Handle endpoint to get questions based on a search term.
-    @app.route('/api/questions/search', methods=['POST'])
-    #@cross_origin()
+    @app.route('/page/questions/search', methods=['POST'])
     def search_question():
         try:
             # get the search term
@@ -185,8 +179,7 @@ def create_app(test_config=None):
     # # '''
     # # @TODO:
     # # Create a GET endpoint to get questions based on category.
-    @app.route('/api/categories/<int:category_id>/questions')
-    #@cross_origin()
+    @app.route('/page/categories/<int:category_id>/questions')
     def search_questions_by_category(category_id):
         questions = Question.query.filter_by(category=category_id).all()
         try:
@@ -206,7 +199,7 @@ def create_app(test_config=None):
             abort(400)
 
     # POST endpoint to get questions to play the quiz
-    @app.route('/api/quizzes', methods=['POST'])
+    @app.route('/page/quizzes', methods=['POST'])
     def random_questions():
         previous_questions = request.get_json().get('previous_questions')
         quiz_category = request.get_json().get('quiz_category')
